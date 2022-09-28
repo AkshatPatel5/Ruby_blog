@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
+  skip_before_action :login, only: [:new,:create]
 
   # GET /users or /users.json
   def index
@@ -25,8 +26,9 @@ class UsersController < ApplicationController
 
     respond_to do |format|
     if @user.save
-      session[:user_id] = @user.id     
-        format.html { redirect_to auth_url, notice: "User was successfully created." }
+      session[:user_id] = @user.id
+        UserMailer.with(user: @user).welcome_email.deliver_now     
+        format.html { redirect_to root_url, notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
     else   
         format.html { render :new, status: :unprocessable_entity }
