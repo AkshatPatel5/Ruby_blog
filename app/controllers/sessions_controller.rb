@@ -8,9 +8,9 @@ class SessionsController < ApplicationController
       if user && user.authenticate(params[:password])  
         session[:user_id] = user.id   
         redirect_to root_url
-      else   
-        flash[:alert] = "Incorrect password"
-        render :new   
+      else
+        flash.now[:alert] = "Incorrect password"   
+        render :new, status: :unprocessable_entity
       end
     else
       flash[:alert] = "Email not found"
