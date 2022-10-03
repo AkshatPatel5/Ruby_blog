@@ -1,6 +1,11 @@
 <h1><%= @article.title %></h1>
 
 <p><%= @article.body %></p>
+<% image = @article.image%>
+<%# <%= image_tag image.variant(:thumb) %>
+<%= image_tag image %>
+
+
 
 <ul>
   <li><%= link_to "Edit", edit_article_path(@article) %></li>
