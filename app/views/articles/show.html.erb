@@ -2,9 +2,10 @@
 
 <p><%= @article.body %></p>
 <% image = @article.image%>
-<%# <%= image_tag image.variant(:thumb) %>
+<% if image.attached?%>
+<%= image_tag image.variant(:thumb)%>
 <%= image_tag image %>
-
+<%end%>
 
 
 <ul>

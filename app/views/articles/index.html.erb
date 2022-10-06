@@ -7,5 +7,8 @@
     </li>
   <% end %>
 </ul>
-
-<%= link_to "New Article", new_article_path %>
+<%= link_to "New Article", new_article_path %><br>
+<% if user_signed_in? %>
+<p> Logged in as <%= current_user.email %></p>
+<%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
+<% end %>
