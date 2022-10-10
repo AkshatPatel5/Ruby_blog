@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   end
    
   resources :users ,except: [:new]
-  get "auth/index"
   root "articles#index"
 
   resources :articles do
