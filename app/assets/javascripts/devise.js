@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   if (document.URL == 'http://localhost:3000/users/sign_up') {
     const signup = document.getElementById('new_user');
-    const email_pattern = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;
+    const email_pattern = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     const only_alphabet_pattern = /^([^0-9]*)$/;
     const p = document.createElement('p');
     const p2 = document.createElement('p');
@@ -18,10 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document
       .querySelector('#user_first_name')
       .addEventListener('keyup', (e) => {
-        if (!only_alphabet_pattern.test(signup.user_first_name.value)) {
-          p.innerHTML = 'First name contains only alphabets';
-          document.getElementById('user_first_name').parentElement.prepend(p);
-        } else {
+        signup_validations();
+        if (only_alphabet_pattern.test(signup.user_first_name.value)) {
           if (
             document.getElementById('user_first_name').parentElement
               .childElementCount > 3
@@ -33,10 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
     document.querySelector('#user_last_name').addEventListener('keyup', (e) => {
-      if (!only_alphabet_pattern.test(signup.user_last_name.value)) {
-        p2.innerHTML = 'Last name contains only alphabets';
-        document.getElementById('user_last_name').parentElement.prepend(p2);
-      } else {
+      signup_validations();
+      if (only_alphabet_pattern.test(signup.user_last_name.value)) {
         if (
           document.getElementById('user_last_name').parentElement
             .childElementCount > 3
@@ -48,10 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.querySelector('#user_email').addEventListener('keyup', (e) => {
-      if (!email_pattern.test(signup.user_email.value)) {
-        p3.innerHTML = 'Email is in wrong format';
-        document.getElementById('user_email').parentElement.prepend(p3);
-      } else {
+      signup_validations();
+      if (email_pattern.test(signup.user_email.value)) {
         if (
           document.getElementById('user_email').parentElement
             .childElementCount > 3
@@ -60,29 +54,41 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    document.getElementById('user_password_confirmation').onkeyup = () => {
-      if (signup_validations()) {
-        console.log('true');
-        document.getElementsByClassName(
-          'actions',
-        )[0].children[0].disabled = false;
-      } else {
+    const signup_validations = () => {
+      let i = 0;
+      if (
+        !(
+          only_alphabet_pattern.test(signup.user_first_name.value) &&
+          signup.user_first_name.value.length != 0
+        )
+      ) {
+        p.innerHTML = 'First name contains only alphabets';
+        document.getElementById('user_first_name').parentElement.prepend(p);
+        i++;
+      }
+      if (
+        !(
+          only_alphabet_pattern.test(signup.user_last_name.value) &&
+          signup.user_last_name.value.length != 0
+        )
+      ) {
+        p2.innerHTML = 'Last name contains only alphabets';
+        document.getElementById('user_last_name').parentElement.prepend(p2);
+        i++;
+      }
+      if (!email_pattern.test(signup.user_email.value)) {
+        p3.innerHTML = 'Email is in wrong format';
+        document.getElementById('user_email').parentElement.prepend(p3);
+        i++;
+      }
+      if (i > 0) {
         document.getElementsByClassName(
           'actions',
         )[0].children[0].disabled = true;
-      }
-    };
-
-    const signup_validations = () => {
-      console.log(signup.user_first_name.value);
-      if (
-        only_alphabet_pattern.test(signup.user_first_name.value) &&
-        only_alphabet_pattern.test(signup.user_last_name.value) &&
-        email_pattern.test(signup.user_email.value)
-      ) {
-        return true;
       } else {
-        return false;
+        document.getElementsByClassName(
+          'actions',
+        )[0].children[0].disabled = false;
       }
     };
   }
