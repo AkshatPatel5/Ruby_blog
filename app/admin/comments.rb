@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register Comment do
-  menu parent: "Article"
+  menu parent: 'Article'
   belongs_to :article, optional: true
   # navigation_menu :article
   # See permitted parameters documentation:
@@ -16,5 +18,4 @@ ActiveAdmin.register Comment do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-  
 end

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register Article do
-  menu parent: "Article"
+  menu parent: 'Article'
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
@@ -7,9 +9,9 @@ ActiveAdmin.register Article do
   #
   permit_params :title, :body, :image
 
-  sidebar "Article Details", only: [:show, :edit] do
+  sidebar 'Article Details', only: %i[show edit] do
     ul do
-      li link_to "Comments", admin_article_comments_path(resource)
+      li link_to 'Comments', admin_article_comments_path(resource)
     end
   end
 
@@ -18,7 +20,7 @@ ActiveAdmin.register Article do
     column(:commenter) { |article| article.comments.first.commenter }
     column(:comment_body) { |article| article.comments.first.commenter }
     # column(:date)
-    column('body',humanize_name: false) # preserve case
+    column('body', humanize_name: false) # preserve case
   end
   #
   # or
