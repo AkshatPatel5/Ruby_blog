@@ -1,0 +1,27 @@
+<table>
+  <tr>
+    <th>title</th>
+    <th>Body</th>
+    <th>comments</th>
+    <th>commenter</th>
+  </tr>
+  <% @articles.each do |article| %>
+    <%if article.comments.present?%>
+      <% article.comments.each do |comment| %>
+        <tr>
+          <td><%= article[:title] %></td>
+          <td><%= article[:body] %></td>
+          <td><%= comment[:body] %></td>
+          <td><%= comment[:commenter] %></td>
+        </tr>
+      <% end %>
+    <%else%>
+        <tr>
+          <td><%= article[:title] %></td>
+          <td><%= article[:body] %></td>
+          <td></td>
+          <td></td>
+        </tr>
+    <%end%>
+  <% end %>
+</table>
