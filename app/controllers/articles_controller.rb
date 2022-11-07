@@ -15,15 +15,15 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     authorize @article
-    rescue StandardError => e
-      flash.now[:alert] = e.message
-      render :new , status: :unprocessable_entity and return
     if @article.save
       UserMailer.with(user: current_user, article: @article).article_email.deliver_now
       redirect_to @article
     else
       render :new, status: :unprocessable_entity
     end
+    rescue StandardError => e
+      flash.now[:alert] = e.message
+      render :new , status: :unprocessable_entity and return
   end
 
   def edit; end

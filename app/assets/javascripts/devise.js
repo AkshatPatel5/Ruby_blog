@@ -5,8 +5,30 @@ const passwordPattern =
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('new_user');
+  const firstName = document.querySelector('#user_first_name');
+  const lastName = document.querySelector('#user_last_name');
+  const email = document.querySelector('#user_email');
+  const password = document.querySelector('#user_password');
+  const passwordConfirmation = document.querySelector(
+    '#user_password_confirmation',
+  );
+  const firstNameError = document.createElement('p');
+  firstNameError.innerHTML = 'First name should be alphabetical only';
+  const lastNameError = document.createElement('p');
+  lastNameError.innerHTML = 'Last name should be alphabetical only';
+  const emailError = document.createElement('p');
+  emailError.innerHTML = 'Email should be in correct format';
+  emailError.className = 'form-text';
+  const passwordError = document.createElement('p');
+  passwordError.className = 'form-text';
+  passwordError.innerHTML =
+    "Password must contain a mix of uppercase, lowercase, numbers, and ! @ # $ % ^ & * ( ) _ + - = [ ] { } | ' and length should be minimum 8 characters";
+  const passwordConfirmationError = document.createElement('p');
+  passwordConfirmationError.innerHTML = 'Password should match';
+
   form.addEventListener('submit', (e) => {
     if (validateForm()) {
+      console.log('true');
       return true;
     } else {
       e.preventDefault();
@@ -14,56 +36,65 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const validateForm = () => {
-    const errors = [];
+    let errors = 0;
 
     if (window.location.pathname != '/users/sign_in') {
       if (
         !(
-          onlyAlphabetPattern.test(form.user_first_name.value) &&
-          form.user_first_name.value.length != 0
+          onlyAlphabetPattern.test(firstName.value) &&
+          firstName.value.length != 0
         )
       ) {
-        errors.push('First name contains only alphabets');
+        firstName.parentElement.appendChild(firstNameError);
+        errors = 1;
+      } else {
+        if (firstName.parentElement.childElementCount > 3) {
+          firstName.parentElement.removeChild(firstNameError);
+        }
       }
       if (
         !(
-          onlyAlphabetPattern.test(form.user_last_name.value) &&
-          form.user_last_name.value.length != 0
+          onlyAlphabetPattern.test(lastName.value) && lastName.value.length != 0
         )
       ) {
-        errors.push('Last name contains only alphabets');
+        lastName.parentElement.appendChild(lastNameError);
+        errors = 1;
+      } else {
+        if (lastName.parentElement.childElementCount > 3) {
+          lastName.parentElement.removeChild(lastNameError);
+        }
       }
-      if (form.user_password.value !== form.user_password_confirmation.value) {
-        errors.push('Password must match');
+      if (password.value !== passwordConfirmation.value) {
+        passwordConfirmation.parentElement.appendChild(
+          passwordConfirmationError,
+        );
+        errors = 1;
+      } else {
+        if (passwordConfirmation.parentElement.childElementCount > 3) {
+          passwordConfirmation.parentElement.removeChild(
+            passwordConfirmationError,
+          );
+        }
       }
     }
 
-    if (!emailPattern.test(form.user_email.value)) {
-      errors.push('Email is in wrong format');
-    }
-    if (!passwordPattern.test(form.user_password.value)) {
-      errors.push(
-        "Password must contain a mix of uppercase, lowercase, numbers, and ! @ # $ % ^ & * ( ) _ + - = [ ] { } | ' and length should be minimum 8 characters",
-      );
-    }
-    if (errors.length > 0) {
-      try {
-        let errors = document.getElementById('errors');
-        if (errors !== null) {
-          form.removeChild(errors);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-      let div = document.createElement('div');
-      div.id = 'errors';
-      for (let i = 0; i < errors.length; i++) {
-        const p = document.createElement('p');
-        p.innerHTML = i + 1 + '. ' + errors[i];
-        div.appendChild(p);
-      }
-      form.prepend(div);
+    if (!emailPattern.test(email.value)) {
+      email.parentElement.appendChild(emailError);
+      errors = 1;
     } else {
+      if (email.parentElement.childElementCount > 3) {
+        email.parentElement.removeChild(emailError);
+      }
+    }
+    if (!passwordPattern.test(password.value)) {
+      password.parentElement.appendChild(passwordError);
+      errors = 1;
+    } else {
+      if (password.parentElement.childElementCount > 4) {
+        password.parentElement.removeChild(passwordError);
+      }
+    }
+    if (errors == 0) {
       return true;
     }
   };

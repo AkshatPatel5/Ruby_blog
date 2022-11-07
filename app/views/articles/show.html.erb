@@ -1,9 +1,9 @@
 <h1 class="article article__title"><%= @article.title %></h1>
 
-<p class="article article__body"><%= @article.body %></p>
+<p class="article article__body lead"><%= @article.body %></p>
 <% image = @article.image%>
 <% if image.attached?%>
-<%= image_tag @article.image.variant(:thumb) %>
+<%= image_tag @article.image.variant(:thumb), class:"rounded" %>
 <%end%>
 
 

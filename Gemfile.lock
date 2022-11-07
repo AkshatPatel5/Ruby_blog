@@ -80,10 +80,16 @@ GEM
     arbre (1.5.0)
       activesupport (>= 3.0.0, < 7.1)
       ruby2_keywords (>= 0.0.2, < 1.0)
+    autoprefixer-rails (10.4.7.0)
+      execjs (~> 2)
     bcrypt (3.1.18)
     bindex (0.8.1)
     bootsnap (1.13.0)
       msgpack (~> 1.2)
+    bootstrap (5.2.2)
+      autoprefixer-rails (>= 9.1.0)
+      popper_js (>= 2.11.6, < 3)
+      sassc-rails (>= 2.0.0)
     builder (3.2.4)
     capybara (3.37.1)
       addressable
@@ -107,6 +113,7 @@ GEM
       responders
       warden (~> 1.2.3)
     erubi (1.11.0)
+    execjs (2.8.1)
     ffi (1.15.5)
     ffi (1.15.5-x64-mingw-ucrt)
     formtastic (4.0.0)
@@ -178,6 +185,7 @@ GEM
     nokogiri (1.13.8-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    popper_js (2.11.6)
     public_suffix (5.0.0)
     puma (5.6.5)
       nio4r (~> 2.0)
@@ -291,12 +299,14 @@ DEPENDENCIES
   activeadmin
   bcrypt (~> 3.1.7)
   bootsnap
+  bootstrap (~> 5.2.2)
   capybara
   debug
   devise
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
+  jquery-rails
   puma (~> 5.0)
   pundit (~> 2.2)
   rails (~> 7.0.4)
