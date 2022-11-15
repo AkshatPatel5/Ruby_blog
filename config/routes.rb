@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  require 'sidekiq/web'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users
@@ -14,5 +15,8 @@ Rails.application.routes.draw do
 
   resources :articles do
     resources :comments
+  end
+  authenticate :user do
+    mount Sidekiq::Web => '/sidekiq'
   end
 end

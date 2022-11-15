@@ -16,7 +16,8 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
     authorize @article
     if @article.save
-      UserMailer.with(user: current_user, article: @article).article_email.deliver_now
+      MailJob.perform_in(5.minutes.from_now,current_user.id,@article.id)
+      
       redirect_to @article
     else
       render :new, status: :unprocessable_entity
