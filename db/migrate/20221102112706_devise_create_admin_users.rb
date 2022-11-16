@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Migration of Active admin user creation with devise functionality
 class DeviseCreateAdminUsers < ActiveRecord::Migration[7.0]
   def change
     create_table :admin_users do |t|

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 table_for assigns[:article].comments do
-    column :id
-    column :commenter
-    column :comment do |comment|
-      simple_format comment.body
-    end
+  column :id
+  column :commenter
+  column :comment do |comment|
+    simple_format comment.body
   end
+end

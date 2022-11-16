@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Sidekiq Job to mail a user on creation of a article
 class MailJob
   include Sidekiq::Job
   queue_as :mail

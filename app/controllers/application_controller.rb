@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller logic for Application
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
   # after_action :verify_authorized, except: :index, unless: :active_admin_controller?
@@ -8,9 +9,9 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-  
+
   protected
-  
+
   # def active_admin_controller?
   #   is_a?(ActiveAdmin::BaseController)
   # end

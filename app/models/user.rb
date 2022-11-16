@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Database logic for User model
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

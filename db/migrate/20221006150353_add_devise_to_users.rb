@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Migration to add devise functionality to user
 class AddDeviseToUsers < ActiveRecord::Migration[7.0]
   def self.up
     change_table :users do |t|
