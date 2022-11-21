@@ -1,10 +1,10 @@
 //= require jquery3
 //= require jquery_ujs
 $(function () {
-  $('form').on('submit', function (e) {
+  $('#article_show').on('submit', function (e) {
     e.preventDefault();
-    let commenter = $('#comment_commenter').val();
-    let body = $('#comment_body').val();
+    const commenter = $('#comment_commenter').val();
+    const body = $('#comment_body').val();
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf('/') + 1);
     comment = {
