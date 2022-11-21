@@ -35,4 +35,18 @@ $(function () {
     });
     return false;
   });
+
+  $('.more').on('click', function () {
+    $(this).siblings('.article__body--complete').slideToggle();
+    $(this).siblings('.article__comments').slideToggle();
+    if ($(this).text() == 'more...') {
+      $(this).text('less');
+    } else if ($(this).text() == 'less') {
+      $(this).text('more...');
+    }
+  });
+
+  $('.list-group-item').on('dblclick', function () {
+    console.log('hi');
+  });
 });

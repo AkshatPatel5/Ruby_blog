@@ -15,6 +15,9 @@
     font-family: monospace;
     font-size: 1rem;
 }
+.article__body--complete{
+    display: none;
+}
 .article__new{
     display: grid;
 }
@@ -32,4 +35,14 @@
 }
 .article--small{
     font-size: small;
+}
+.article__comments{
+    display: none;
+}
+.more{
+    background:lightblue;
+    color:navy;
+    font-size:13px;
+    padding:3px;
+    cursor:pointer;
 }
