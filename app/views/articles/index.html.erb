@@ -3,12 +3,26 @@
 <ul class="list-group">
   <% @articles.each do |article| %>
     <li class="list-group-item list-group-item-action">
-    <div>
+    <div class="d-flex justify-content-between">
       <%= link_to article.title, article %>
+      <div>
+        <button type="button" class="btn btn-info btn-sm">edit</button>
+        <button type="button" class="btn btn-success btn-sm btn-success__title">Submit</button>
+        <button type="button" class="btn btn-danger btn-sm">Cancel</button>
+      </div>
      </div>
+     <div class="d-flex justify-content-between">
+     <div>
       <span class="article__body--initial"><%=article.body.slice(0,100)%></span>
-      <span class="article__body--complete"><%=article.body.slice(100..)%></span>
+      <span class="article__body--complete"><%=article.body%></span>
       <span class="more">more...</span>
+      </div>
+      <div>
+        <button type="button" class="btn btn-info btn-sm btn__article__body">edit</button>
+        <button type="button" class="btn btn-success btn-sm btn-success__body">Submit</button>
+        <button type="button" class="btn btn-danger btn-sm">Cancel</button>
+      </div>
+      </div>
       <div class="article__comments">
       <h2>Comments</h2>
       <%= render article.comments %>

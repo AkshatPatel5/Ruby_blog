@@ -30,10 +30,14 @@ class ArticlesController < ApplicationController
   def edit; end
 
   def update
-    if @article.update(article_params)
-      redirect_to @article
-    else
-      render :edit, status: :unprocessable_entity
+    respond_to do |format|
+      if @article.update(article_params)
+        format.html { redirect_to @article }
+        format.json { render json: @article }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @article.errors, status: :unprocessable_entity }
+      end
     end
   end
 

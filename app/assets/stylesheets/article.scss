@@ -15,7 +15,7 @@
     font-family: monospace;
     font-size: 1rem;
 }
-.article__body--complete{
+.article__body--complete, .btn__article__body, .btn-success ,.btn-danger{
     display: none;
 }
 .article__new{
@@ -45,4 +45,7 @@
     font-size:13px;
     padding:3px;
     cursor:pointer;
+}
+.justify-content-between {
+    min-height: 2.5rem;
 }
