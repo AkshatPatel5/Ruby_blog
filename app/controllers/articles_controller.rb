@@ -15,6 +15,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
+    @article.user_id = current_user.id
     authorize @article
     if @article.save
       MailJob.perform_in(5.minutes.from_now, current_user.id, @article.id)
