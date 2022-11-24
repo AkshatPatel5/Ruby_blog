@@ -5,11 +5,13 @@
     <li class="list-group-item list-group-item-action">
     <div class="d-flex justify-content-between">
       <%= link_to article.title, article %>
+      <% if article.user_id == current_user.id%>
       <div>
         <button type="button" class="btn btn-info btn-sm">edit</button>
         <button type="button" class="btn btn-success btn-sm btn-success__title">Submit</button>
         <button type="button" class="btn btn-danger btn-sm">Cancel</button>
       </div>
+      <% end %>
      </div>
      <div class="d-flex justify-content-between">
      <div>
@@ -17,11 +19,13 @@
       <span class="article__body--complete"><%=article.body%></span>
       <span class="more">more...</span>
       </div>
-      <div>
-        <button type="button" class="btn btn-info btn-sm btn__article__body">edit</button>
-        <button type="button" class="btn btn-success btn-sm btn-success__body">Submit</button>
-        <button type="button" class="btn btn-danger btn-sm">Cancel</button>
-      </div>
+        <% if article.user_id == current_user.id%>
+        <div>
+          <button type="button" class="btn btn-info btn-sm btn__article__body">edit</button>
+          <button type="button" class="btn btn-success btn-sm btn-success__body">Submit</button>
+          <button type="button" class="btn btn-danger btn-sm">Cancel</button>
+        </div>
+        <% end %>
       </div>
       <div class="article__comments">
       <h2>Comments</h2>
