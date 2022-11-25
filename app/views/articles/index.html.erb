@@ -3,33 +3,37 @@
 <ul class="list-group">
   <% @articles.each do |article| %>
     <li class="list-group-item list-group-item-action">
-    <div class="d-flex justify-content-between">
-      <%= link_to article.title, article %>
-      <% if article.user_id == current_user.id%>
-      <div>
-        <button type="button" class="btn btn-info btn-sm">edit</button>
-        <button type="button" class="btn btn-success btn-sm btn-success__title">Submit</button>
-        <button type="button" class="btn btn-danger btn-sm">Cancel</button>
-      </div>
-      <% end %>
-     </div>
-     <div class="d-flex justify-content-between">
-     <div>
-      <span class="article__body--initial"><%=article.body.slice(0,100)%></span>
-      <span class="article__body--complete"><%=article.body%></span>
-      <span class="more">more...</span>
-      </div>
+      <div class="d-flex justify-content-between">
+        <%= link_to article.title, article ,:id=>"title#{article.id}"%>
         <% if article.user_id == current_user.id%>
         <div>
-          <button type="button" class="btn btn-info btn-sm btn__article__body">edit</button>
-          <button type="button" class="btn btn-success btn-sm btn-success__body">Submit</button>
-          <button type="button" class="btn btn-danger btn-sm">Cancel</button>
+          <button type="button" class="btn btn-info btn-sm btn__title--edit" id=<%="title--edit#{article.id}"%>>edit</button>
+          <button type="button" class="btn btn-success btn-sm btn__title--success" id=<%="title--success#{article.id}"%>>Submit</button>
+          <button type="button" class="btn btn-danger btn-sm btn__title--cancel" id=<%="title--cancel#{article.id}"%>>Cancel</button>
         </div>
         <% end %>
       </div>
-      <div class="article__comments">
-      <h2>Comments</h2>
-      <%= render article.comments %>
+      <div>
+        <div id=<%="article__body--initial#{article.id}"%>>
+          <span class="article__body--initial" id=<%="body--initial#{article.id}"%>><%=article.body.slice(0,100)%></span>
+          <span class="more" id=<%="more#{article.id}"%>>more...</span>
+        </div>
+        <div class="article__body--complete" id=<%="article__body--complete#{article.id}"%>>
+          <div class="d-flex justify-content-between">
+            <span id=<%="body#{article.id}"%>><%=article.body%></span>
+            <% if article.user_id == current_user.id%>
+              <div>
+                <button type="button" class="btn btn-info btn-sm btn__body--edit" id=<%="body--edit#{article.id}"%>>edit</button>
+                <button type="button" class="btn btn-success btn-sm btn__body--success" id=<%="body--success#{article.id}"%>>Submit</button>
+                <button type="button" class="btn btn-danger btn-sm btn__body--cancel" id=<%="body--cancel#{article.id}"%>>Cancel</button>
+              </div>
+            <% end %>
+          </div>
+          <div>
+            <h2>Comments</h2>
+            <%= render article.comments %>
+          </div>
+        </div>
       </div>
     </li>
   <% end %>

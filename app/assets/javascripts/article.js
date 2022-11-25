@@ -39,45 +39,41 @@ $(function () {
   });
 
   $('.more').on('click', function () {
+    const id = this.id.charAt(this.id.length - 1);
+    $(`#article__body--initial${id}`).slideToggle();
+    $(`#article__body--complete${id}`).slideToggle();
     if ($(this).text() == 'more...') {
-      $(this).siblings('.article__body--complete').slideDown();
-      $(this).siblings('.article__body--initial').slideUp();
-      $(this).parent().parent().siblings('.article__comments').slideDown();
-      $(this).parent().siblings().children('.btn-info').show();
-      const parent = $(this).parents('.list-group-item');
-      $(this).appendTo(parent);
-      $(this).text('less');
+      $(this).appendTo($(this).parents('.list-group-item')).text('less');
     } else if ($(this).text() == 'less') {
-      $(this).appendTo(
-        $(this).parent().children('div:nth-child(2)').children('div:first'),
-      );
-      $(this).siblings('.article__body--complete').slideUp();
-      $(this).siblings('.article__body--initial').slideDown();
-      $(this).parent().parent().siblings('.article__comments').slideUp();
-      $(this).parent().siblings().children('.btn-info').hide();
-      $(this).text('more...');
+      $(this)
+        .appendTo($(`#article__body--initial${id}`))
+        .text('more...');
     }
   });
 
-  $('.btn-info').on('click', function () {
-    $(this).parent().siblings().attr('contenteditable', 'true');
-    $(this).parent().siblings().focus();
+  $('.btn__title--edit').on('click', function () {
+    const id = this.id.charAt(this.id.length - 1);
+    $(`#title${id}`).attr('contenteditable', 'true').focus();
     $(this).siblings().show();
     $(this).hide();
-    title[$(this).parent().siblings().attr('href')] = $(this)
-      .parent()
-      .siblings()
-      .text();
-    body[
-      $(this).parent().parent().siblings('.d-flex').children('a').attr('href')
-    ] = $(this).parent().siblings().children('.article__body--complete').text();
+    title[id] = $(`#title${id}`).text();
   });
-  $('.btn-success__title').on('click', function () {
-    const ths = $(this);
-    const url = ths.parent().siblings().attr('href');
-    article = {
-      title: ths.parent().siblings().text(),
-    };
+  $('.btn__body--edit').on('click', function () {
+    const id = this.id.charAt(this.id.length - 1);
+    $(`#body${id}`).attr('contenteditable', 'true').focus();
+    $(this).siblings().show();
+    $(this).hide();
+    body[id] = $(`#body${id}`).text();
+  });
+  const hideButton = (element, id) => {
+    console.log(element);
+    $(`#${element}--success${id}`).hide();
+    $(`#${element}--cancel${id}`).hide();
+    $(`#${element}--edit${id}`).show();
+    $(`#${element}${id}`).attr('contenteditable', 'false');
+  };
+  const successAjax = (element, article, id) => {
+    const url = `/articles/${id}`;
     $.ajax({
       type: 'PATCH',
       url: url,
@@ -88,82 +84,51 @@ $(function () {
       data: JSON.stringify({ article }),
       success: function (data, textStatus, jqXHR) {
         if (textStatus == 'success') {
-          ths.parent().siblings().text(data.title);
+          if (element == 'title') {
+            $(`#title${id}`).text(data.title);
+          }
+          if (element == 'body') {
+            $(`#body--initial${id}`).text(data.body.slice(0, 100));
+            $(`#body${id}`).text(data.body);
+          }
         } else {
           $('body').prepend(`<p>${jqXHR.responseText}</p>`);
         }
       },
       error: function (jqXHR) {
-        alert(`error ${jqXHR.status}: Title ${jqXHR.responseJSON.title[0]}`);
+        if (element == 'title') {
+          alert(`error ${jqXHR.status}: Title ${jqXHR.responseJSON.title[0]}`);
+        }
+        if (element == 'body') {
+          alert(`error ${jqXHR.status}: Body ${jqXHR.responseJSON.body[0]}`);
+        }
       },
     });
-    $(this).hide();
-    $(this).siblings().hide();
-    $(this).siblings('.btn-info').show();
-    $(this).parent().siblings().attr('contenteditable', 'false');
-  });
-  $('.btn-success__body').on('click', function () {
-    const ths = $(this);
-    const articleBody = ths
-      .parent()
-      .siblings()
-      .children('.article__body--complete');
-    const url = ths.parent().parent().siblings().children('a').attr('href');
-    article = {
-      body: articleBody.text(),
+    hideButton(element, id);
+  };
+
+  $('.btn__title--success').on('click', function () {
+    const id = this.id.charAt(this.id.length - 1);
+    const article = {
+      title: $(`#title${id}`).text(),
     };
-    $.ajax({
-      type: 'PATCH',
-      url: url,
-      dataType: 'json',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: JSON.stringify({ article }),
-      success: function (data, textStatus, jqXHR) {
-        if (textStatus == 'success') {
-          articleBody
-            .siblings('.article__body--initial')
-            .text(data.body.slice(0, 100));
-          articleBody.text(data.body);
-        } else {
-          $('body').prepend(`<p>${jqXHR.responseText}</p>`);
-        }
-      },
-      error: function (jqXHR) {
-        alert(`error ${jqXHR.status}: Body ${jqXHR.responseJSON.body[0]}`);
-      },
-    });
-    $(this).hide();
-    $(this).siblings().hide();
-    $(this).siblings('.btn-info').show();
-    $(this).parent().siblings().attr('contenteditable', 'false');
+    successAjax('title', article, id);
   });
-  $('.btn-danger').on('click', function () {
-    if ($(this).parent().siblings().children().length >= 2) {
-      $(this)
-        .parent()
-        .siblings()
-        .children('.article__body--complete')
-        .text(
-          body[
-            $(this)
-              .parent()
-              .parent()
-              .siblings('.d-flex')
-              .children('a')
-              .attr('href')
-          ],
-        );
-    } else {
-      $(this)
-        .parent()
-        .siblings()
-        .text(title[$(this).parent().siblings().attr('href')]);
-    }
-    $(this).hide();
-    $(this).siblings().hide();
-    $(this).siblings('.btn-info').show();
-    $(this).parent().siblings().attr('contenteditable', 'false');
+  $('.btn__body--success').on('click', function () {
+    const id = this.id.charAt(this.id.length - 1);
+    const article = {
+      body: $(`#body${id}`).text(),
+    };
+    successAjax('body', article, id);
+  });
+  $('.btn__title--cancel').on('click', function () {
+    const id = this.id.charAt(this.id.length - 1);
+    $(`#title${id}`).text(title[id]);
+    hideButton('title', id);
+  });
+  $('.btn__body--cancel').on('click', function () {
+    const id = this.id.charAt(this.id.length - 1);
+    $(`#body${id}`).text(title[id]);
+    hideButton('body', id);
   });
 });
