@@ -5,12 +5,10 @@ $(function () {
   let body = {};
   $('#article_show').on('submit', function (e) {
     e.preventDefault();
-    const commenter = $('#comment_commenter').val();
     const body = $('#comment_body').val();
     const url = window.location.pathname;
     const id = url.substring(url.lastIndexOf('/') + 1);
     comment = {
-      commenter: commenter,
       body: body,
     };
     $.ajax({
@@ -24,7 +22,7 @@ $(function () {
       success: function (data, textStatus, jqXHR) {
         if (textStatus == 'success') {
           $('h2:last').before(
-            '<p><strong>Commenter: </strong>' + data.commenter + '</p>',
+            `<p><strong>Commenter: </strong>${$('.navbar').attr("id")}</p>`,
             '<p><strong>Comment: </strong>' + data.body + '</p>',
           );
         } else {
@@ -66,7 +64,6 @@ $(function () {
     body[id] = $(`#body${id}`).text();
   });
   const hideButton = (element, id) => {
-    console.log(element);
     $(`#${element}--success${id}`).hide();
     $(`#${element}--cancel${id}`).hide();
     $(`#${element}--edit${id}`).show();
@@ -130,5 +127,28 @@ $(function () {
     const id = this.id.charAt(this.id.length - 1);
     $(`#body${id}`).text(title[id]);
     hideButton('body', id);
+  });
+
+  $('.notification').on('click', function () {
+    $(this).css('background-color', 'aliceblue');
+    $.ajax({
+      type: 'PATCH',
+      url: `/notifications/${this.id}`,
+      dataType: 'json',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify({ read: true }),
+      success: function (data, textStatus, jqXHR) {
+        if (textStatus == 'success') {
+          $('#notification_count').text(data);
+        } else {
+          $('body').prepend(`<p>${jqXHR.responseText}</p>`);
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        $('body').prepend(`<p>${(jqXHR.responseText, errorThrown)}</p>`);
+      },
+    });
   });
 });

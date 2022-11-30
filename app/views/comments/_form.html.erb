@@ -1,9 +1,5 @@
 <%= form_with model: [ @article, @article.comments.build ], local: false, :id => 'article_show' do |form| %>
   <p>
-    <%= form.label :commenter, class:"form-label"%><br>
-    <%= form.text_field :commenter, class:"form-control" %>
-  </p>
-  <p>
     <%= form.label :body, class:"form-label" %><br>
     <%= form.text_area :body,class:"form-control" %>
   </p>

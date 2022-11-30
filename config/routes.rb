@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
 
+  patch '/notifications/:id' => 'notifications#update'
+
   resources :users, except: [:new]
   root 'articles#index'
 

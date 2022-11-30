@@ -1,8 +1,9 @@
 @import "bootstrap";
+@import "font-awesome";
 .article{
     justify-content: center;
     display: flex;
-    background-color: rebeccapurple;
+    background-color: orange;
     font-family: 'Times New Roman', Times, serif;
     border-radius: 50px;
     border: solid;
@@ -48,4 +49,7 @@
 }
 .justify-content-between {
     min-height: 2.5rem;
+}
+.notification--read {
+    background-color: aliceblue;
 }
