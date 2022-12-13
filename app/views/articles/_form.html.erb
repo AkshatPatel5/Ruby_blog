@@ -1,6 +1,6 @@
-<%= form_with model: article do |form| %>
+<%= form_with model: article ,:class=>"article article__new" do |form| %>
   <div>
-    <%= form.label :title %><br>
+    <%= form.label :title,:class=>"article__title" %><br>
     <%= form.text_field :title %>
     <% article.errors.full_messages_for(:title).each do |message| %>
       <div><%= message %></div>
@@ -8,7 +8,7 @@
   </div>
 
   <div>
-    <%= form.label :body %><br>
+    <%= form.label :body,:class=>"article__body" %><br>
     <%= form.text_area :body %><br>
     <% article.errors.full_messages_for(:body).each do |message| %>
       <div><%= message %></div>

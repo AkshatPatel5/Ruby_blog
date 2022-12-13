@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller logic for User
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
   skip_before_action :authenticate_user!, only: %i[new create]
@@ -23,7 +24,6 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-
     respond_to do |format|
       if @user.save
         user_session[:user_id] = @user.id

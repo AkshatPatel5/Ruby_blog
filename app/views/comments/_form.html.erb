@@ -1,13 +1,9 @@
-<%= form_with model: [ @article, @article.comments.build ] do |form| %>
+<%= form_with model: [ @article, @article.comments.build ], local: false, :id => 'article_show' do |form| %>
   <p>
-    <%= form.label :commenter %><br>
-    <%= form.text_field :commenter %>
+    <%= form.label :body, class:"form-label" %><br>
+    <%= form.text_area :body,class:"form-control" %>
   </p>
   <p>
-    <%= form.label :body %><br>
-    <%= form.text_area :body %>
-  </p>
-  <p>
-    <%= form.submit %>
+    <%= form.submit class:"btn btn-outline-primary"%>
   </p>
 <% end %>

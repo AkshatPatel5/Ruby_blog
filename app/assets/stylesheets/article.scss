@@ -1,0 +1,55 @@
+@import "bootstrap";
+@import "font-awesome";
+.article{
+    justify-content: center;
+    display: flex;
+    background-color: orange;
+    font-family: 'Times New Roman', Times, serif;
+    border-radius: 50px;
+    border: solid;
+}
+.article__title{
+    font-size: 4rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.article__body{
+    font-family: monospace;
+    font-size: 1rem;
+}
+.article__body--complete, .btn-success ,.btn-danger{
+    display: none;
+}
+.article__new{
+    display: grid;
+}
+.article--black{
+    background-color: black;
+}
+.article--red{
+    background-color: red;
+}
+.article--white{
+    background-color: white;
+}
+.article--big{
+    font-size: large;
+}
+.article--small{
+    font-size: small;
+}
+.article__comments{
+    display: none;
+}
+.more{
+    background:lightblue;
+    color:navy;
+    font-size:13px;
+    padding:3px;
+    cursor:pointer;
+}
+.justify-content-between {
+    min-height: 2.5rem;
+}
+.notification--read {
+    background-color: aliceblue;
+}

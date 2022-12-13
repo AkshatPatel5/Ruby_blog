@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blog</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "article", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "article" %>
+  </head>
+
+  <body class="p-3">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="<%=current_user%>">
+    <div class="container-fluid">
+      <a class="navbar-brand"></a>
+      <ul class="navbar-nav d-flex flex-row me-1">
+        <li class="nav-item dropdown">
+          <div class="dropdown">
+            <a class="me-3 dropdown-toggle hidden-arrow" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-bell text-white"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-notification bg-danger" id="notification_count"><%=current_user.notifications.where(read: false).count%></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <% current_user.notifications.each do |notification| %>
+                <%if notification.read == false%>
+                <li><a class="dropdown-item notification" id=<%=notification.id%>><%="#{notification.comment.user.first_name} #{notification.comment.user.last_name} commented on your article #{notification.comment.article.title}"%></a></li>
+                <% else %>
+                <li><a class="dropdown-item notification--read" id=<%=notification.id%>><%="#{notification.comment.user.first_name} #{notification.comment.user.last_name} commented on your article #{notification.comment.article.title}"%></a></li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+    <%= yield %>
+  </body>
+</html>

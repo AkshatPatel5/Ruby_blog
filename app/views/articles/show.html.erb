@@ -1,15 +1,15 @@
-<h1><%= @article.title %></h1>
+<h1 class="article article__title"><%= @article.title %></h1>
 
-<p><%= @article.body %></p>
+<p class="article article__body lead"><%= @article.body %></p>
 <% image = @article.image%>
 <% if image.attached?%>
-<%= image_tag @article.image.variant(:thumb) %>
+<%= image_tag @article.image.variant(:thumb), class:"rounded" %>
 <%end%>
 
 
 <ul>
-  <li><%= link_to "Edit", edit_article_path(@article) %></li>
-  <li><%= link_to "Destroy", article_path(@article), data: {
+  <li class="article article--black"><%= link_to "Edit", edit_article_path(@article) %></li>
+  <li class="article article--red"><%= link_to "Destroy", article_path(@article), data: {
                     turbo_method: :delete,
                     turbo_confirm: "Are you sure?"
                   } %></li>

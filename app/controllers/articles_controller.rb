@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller logic for Article
 class ArticlesController < ApplicationController
   before_action :find_article, only: %i[show edit update destroy]
   def index
@@ -14,22 +15,30 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
-
+    @article.user_id = current_user.id
+    authorize @article
     if @article.save
-      UserMailer.with(user: current_user, article: @article).article_email.deliver_now
+      MailJob.perform_in(5.minutes.from_now, current_user.id, @article.id)
       redirect_to @article
     else
       render :new, status: :unprocessable_entity
     end
+  rescue StandardError => e
+    flash.now[:alert] = e.message
+    render :new, status: :unprocessable_entity and return
   end
 
   def edit; end
 
   def update
-    if @article.update(article_params)
-      redirect_to @article
-    else
-      render :edit, status: :unprocessable_entity
+    respond_to do |format|
+      if @article.update(article_params)
+        format.html { redirect_to @article }
+        format.json { render json: @article }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @article.errors, status: :unprocessable_entity }
+      end
     end
   end
 
